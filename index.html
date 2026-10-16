@@ -28,7 +28,8 @@
   "priceRange": "$$",
   "address": {"@type": "PostalAddress", "streetAddress": "Plaza de las Américas", "addressLocality": "Ciudad Juárez", "addressRegion": "Chihuahua", "addressCountry": "MX"},
   "openingHoursSpecification": [{"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"], "opens": "11:30", "closes": "19:30"}],
-  "sameAs": ["http://facebook.com/lasalitasdesiempreoficial", "https://www.instagram.com/las_alitas_de_siempre"],
+  "sameAs": ["http://facebook.com/lasalitasdesiempreoficial", "https://www.instagram.com/las_alitas_de_siempre", "https://web.didiglobal.com/mx/food/juarez-chih-cjs-chh/las-alitas-de-siempre/5764607737326207237/", "https://www.ubereats.com/mx/store/las-alitas-de-siempre/QByVYgOzTsGOqhaQFAfe3Q"],
+  "potentialAction": {"@type": "OrderAction", "target": "https://web.didiglobal.com/mx/food/juarez-chih-cjs-chh/las-alitas-de-siempre/5764607737326207237/", "deliveryMethod": "http://purl.org/goodrelations/v1#DeliveryModeOwnFleet"},
   "hasMenu": {"@type": "Menu", "hasMenuSection": [
     {"@type": "MenuSection", "name": "Alitas & Boneless", "hasMenuItem": [
       {"@type": "MenuItem", "name": "Boneless", "offers": {"@type": "Offer", "price": "175", "priceCurrency": "MXN"}},
@@ -82,6 +83,19 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
   .btn--ghost:hover{--bg:rgba(255,243,227,.12)}
 }
 
+.btn--app{--bg:var(--cream);--fg:var(--ink);box-shadow:0 10px 30px -14px rgba(255,243,227,.35)}
+@media (hover:hover) and (pointer:fine){.btn--app:hover{--bg:#fff}}
+.hero__actions{display:flex;flex-wrap:wrap;align-items:center;gap:16px 28px}
+.hero__actions .delivery{margin-top:0}
+@media (min-width:761px){.hero__actions .delivery{padding-left:28px;border-left:1px solid var(--line)}}
+
+.delivery{display:flex;flex-wrap:wrap;align-items:center;gap:12px 16px;margin-top:16px}
+.delivery__label{font:800 12px/1 var(--body);letter-spacing:.18em;text-transform:uppercase;color:var(--cream-mute)}
+.delivery__btns{display:flex;gap:10px;flex-wrap:wrap}
+.delivery .btn{height:48px;padding:0 20px;font-size:14px}
+.orderbar .btn--app{flex:0 1 auto;padding:0 14px}
+.final__ctas{display:flex;flex-wrap:wrap;gap:12px}
+
 /* ---------- Nav ---------- */
 .nav{position:fixed;inset:0 0 auto 0;z-index:100;padding:14px 0;transition:background-color 240ms ease,backdrop-filter 240ms ease,padding 240ms var(--ease-out),box-shadow 240ms ease}
 .nav.is-solid{background:rgba(11,9,8,.78);backdrop-filter:blur(16px) saturate(1.3);-webkit-backdrop-filter:blur(16px) saturate(1.3);padding:8px 0;box-shadow:0 1px 0 var(--line)}
@@ -102,14 +116,14 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 @keyframes heroIn{to{transform:scale(1)}}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;
   background:linear-gradient(90deg,rgba(11,9,8,.94) 0%,rgba(11,9,8,.72) 36%,rgba(11,9,8,0) 66%),linear-gradient(0deg,var(--ink) 0%,rgba(11,9,8,0) 34%)}
-.hero__inner{padding-top:140px;padding-bottom:clamp(40px,8vh,96px);width:100%}
-.hero h1{font-size:clamp(64px,10.5vw,168px);max-width:9ch}
+.hero__inner{padding-top:108px;padding-bottom:clamp(32px,5vh,64px);width:100%}
+.hero h1{font-size:clamp(56px,min(8.6vw,13.5vh),136px);max-width:9ch}
 .hero h1 .line{display:block;overflow:hidden;padding-bottom:.04em}
 .hero h1 .line > span{display:block;transform:translateY(105%);animation:lineUp 900ms var(--ease-out) forwards;animation-delay:calc(180ms + var(--i)*90ms)}
 @keyframes lineUp{to{transform:translateY(0)}}
-.hero .lead{margin:22px 0 34px}
+.hero .lead{margin:18px 0 28px}
 .hero__cta{display:flex;flex-wrap:wrap;gap:12px}
-.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:38px}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
 .chip{display:inline-flex;align-items:center;gap:9px;height:38px;padding:0 15px;border-radius:999px;background:rgba(255,243,227,.06);box-shadow:inset 0 0 0 1px var(--line);font-size:13.5px;font-weight:700;color:var(--cream-dim);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px)}
 .chip svg{width:15px;height:15px;color:var(--amber)}
 .dot{width:8px;height:8px;border-radius:50%;background:#8a7f76;position:relative}
@@ -127,6 +141,12 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
   .hero .btn--ghost{background:var(--bg)}
   .chips{margin-top:22px}
   .chips .chip:not(:first-child){display:none}
+  .hero__cta .btn--ghost{display:none}
+  .hero .lead{font-size:15.5px;margin:14px 0 22px}
+  .hero__actions{gap:14px}
+  .delivery{gap:10px 12px}
+  .delivery__label{color:var(--cream);text-shadow:0 1px 10px rgba(0,0,0,.9)}
+  .hero .eyebrow{font-size:10.5px;letter-spacing:.16em}
   .hero__inner{padding-top:120px;align-self:flex-start}
   .hero__cta .btn{flex:1 1 auto}
 }
@@ -281,8 +301,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-con
 .orderbar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:120;display:none;gap:8px;padding:8px;border-radius:999px;background:rgba(20,16,14,.86);backdrop-filter:blur(18px) saturate(1.4);-webkit-backdrop-filter:blur(18px) saturate(1.4);box-shadow:0 20px 50px -14px rgba(0,0,0,.8),inset 0 0 0 1px var(--line);
   transform:translateY(calc(100% + 24px));transition:transform 420ms var(--ease-drawer)}
 .orderbar.show{transform:translateY(0)}
-.orderbar .btn{height:52px;flex:1}
-.orderbar .btn--ghost{flex:0 0 auto;padding:0 20px}
+.orderbar .btn{height:52px;flex:1;padding:0 14px;font-size:14px}
 @media (max-width:760px){.orderbar{display:flex}}
 
 /* ---------- Reduced motion: keep fades, drop movement ---------- */
@@ -338,12 +357,21 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-con
         <span class="line"><span style="--i:2" class="hot">volver.</span></span>
       </h1>
       <p class="lead fade-up" style="--i:2">Alitas y boneless crujientes con 13 salsas de la casa, hamburguesas jugosas y nuestros famosos <b style="color:var(--cream)">Papaneless</b>. Llámanos y tu pedido estará listo para recoger.</p>
+      <div class="hero__actions">
       <div class="hero__cta fade-up" style="--i:3">
         <a class="btn" href="tel:+526564887824" data-call>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
           Llamar · 656.488.7824
         </a>
         <a class="btn btn--ghost" href="#menu">Ver menú completo</a>
+      </div>
+      <div class="delivery fade-up" style="--i:3.5">
+        <span class="delivery__label">O pídelo a domicilio</span>
+        <div class="delivery__btns">
+          <a class="btn btn--app" href="https://web.didiglobal.com/mx/food/juarez-chih-cjs-chh/las-alitas-de-siempre/5764607737326207237/" target="_blank" rel="noopener" data-delivery><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M8.5 17.5h6l2-6h-5l-3 6M15 6h2.5l1 5.5"/></svg><span>DiDi Food</span></a>
+          <a class="btn btn--app" href="https://www.ubereats.com/mx/store/las-alitas-de-siempre/QByVYgOzTsGOqhaQFAfe3Q" target="_blank" rel="noopener" data-delivery><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span>Uber Eats</span></a>
+        </div>
+      </div>
       </div>
       <div class="chips fade-up" style="--i:4">
         <span class="chip"><span class="dot" id="openDot"></span><span id="openText">Lunes a domingo · 11:30 AM – 7:30 PM</span></span>
@@ -485,7 +513,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-con
             </div>
             <div class="info__row">
               <span class="info__ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg></span>
-              <div><h3>Servicio</h3><p>Para llevar<small>Llámanos y tendremos tu pedido listo.</small></p></div>
+              <div><h3>Servicio</h3><p>Para llevar o a domicilio<small>Llámanos y tendremos tu pedido listo, o pídelo a tu casa por <a href="https://web.didiglobal.com/mx/food/juarez-chih-cjs-chh/las-alitas-de-siempre/5764607737326207237/" target="_blank" rel="noopener" style="color:var(--amber);font-weight:800">DiDi Food</a> o <a href="https://www.ubereats.com/mx/store/las-alitas-de-siempre/QByVYgOzTsGOqhaQFAfe3Q" target="_blank" rel="noopener" style="color:var(--amber);font-weight:800">Uber Eats</a>.</small></p></div>
             </div>
           </div>
         </div>
@@ -507,11 +535,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-con
       <div>
         <span class="eyebrow" style="color:var(--cream)">¿Listo para comer?</span>
         <h2 class="h-display" style="margin-top:16px;font-size:clamp(52px,7.4vw,120px)">Ya se te<br>antojó.</h2>
-        <p>Llámanos, ordena y agiliza tu pedido ahora mismo para recoger. Lo tenemos listo cuando llegues.</p>
-        <a class="btn" href="tel:+526564887824" data-call>
+        <p>Llámanos y lo tenemos listo cuando llegues, o pídelo a tu casa por DiDi Food o Uber Eats.</p>
+        <div class="final__ctas"><a class="btn" href="tel:+526564887824" data-call>
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
           Ordena y recoge · 656.488.7824
         </a>
+          <a class="btn btn--app" href="https://web.didiglobal.com/mx/food/juarez-chih-cjs-chh/las-alitas-de-siempre/5764607737326207237/" target="_blank" rel="noopener" data-delivery><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M8.5 17.5h6l2-6h-5l-3 6M15 6h2.5l1 5.5"/></svg><span>DiDi Food</span></a>
+          <a class="btn btn--app" href="https://www.ubereats.com/mx/store/las-alitas-de-siempre/QByVYgOzTsGOqhaQFAfe3Q" target="_blank" rel="noopener" data-delivery><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span>Uber Eats</span></a></div>
       </div>
       <div class="final__img reveal-img"><img src="img/pickup.webp" alt="Pedido para llevar listo para recoger" loading="lazy"></div>
     </div>
@@ -532,9 +562,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:24px;align-items:center;justify-con
 <div class="orderbar" id="orderbar">
   <a class="btn" href="tel:+526564887824" data-call>
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>
-    Llamar y pedir
+    Llamar
   </a>
-  <a class="btn btn--ghost" href="#menu">Menú</a>
+  <a class="btn btn--app" href="https://web.didiglobal.com/mx/food/juarez-chih-cjs-chh/las-alitas-de-siempre/5764607737326207237/" target="_blank" rel="noopener" data-delivery><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="5.5" cy="17.5" r="3"/><circle cx="18.5" cy="17.5" r="3"/><path d="M8.5 17.5h6l2-6h-5l-3 6M15 6h2.5l1 5.5"/></svg><span>DiDi</span></a>
+  <a class="btn btn--app" href="https://www.ubereats.com/mx/store/las-alitas-de-siempre/QByVYgOzTsGOqhaQFAfe3Q" target="_blank" rel="noopener" data-delivery><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><path d="M3 6h18M16 10a4 4 0 0 1-8 0"/></svg><span>Uber Eats</span></a>
 </div>
 
 <script>
