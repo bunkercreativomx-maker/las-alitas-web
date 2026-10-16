@@ -121,13 +121,18 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 @media (max-width:760px){
   .hero{align-items:flex-end}
   .hero__media img{object-position:50% 100%}
-  .hero::before{background:linear-gradient(180deg,rgba(11,9,8,.92) 0%,rgba(11,9,8,.55) 42%,rgba(11,9,8,.15) 62%,var(--ink) 100%)}
+  .hero::before{background:linear-gradient(180deg,rgba(11,9,8,.94) 0%,rgba(11,9,8,.86) 50%,rgba(11,9,8,.35) 68%,rgba(11,9,8,.1) 80%,var(--ink) 100%)}
+  .hero .lead{text-shadow:0 1px 14px rgba(0,0,0,.8)}
+  .hero .btn--ghost,.hero .chip{--bg:rgba(11,9,8,.62);background:rgba(11,9,8,.62)}
+  .hero .btn--ghost{background:var(--bg)}
+  .chips{margin-top:22px}
+  .chips .chip:not(:first-child){display:none}
   .hero__inner{padding-top:120px;align-self:flex-start}
   .hero__cta .btn{flex:1 1 auto}
 }
 
 /* ---------- Marquee (constant motion = linear) ---------- */
-.marquee{border-block:1px solid var(--line);background:var(--red-deep);overflow:hidden;position:relative}
+.marquee{border-block:1px solid var(--line);background:var(--red-deep);overflow:hidden;position:relative;-webkit-mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .marquee__track{display:flex;width:max-content;animation:marquee 38s linear infinite}
 .marquee span{font:400 clamp(22px,2.6vw,34px)/1 var(--display);text-transform:uppercase;padding:18px 0;display:flex;align-items:center;white-space:nowrap;color:var(--cream)}
 .marquee span::after{content:"";width:9px;height:9px;margin:0 28px;background:var(--amber);border-radius:50%}
@@ -136,6 +141,7 @@ button{font:inherit;color:inherit;background:none;border:0;cursor:pointer;-webki
 
 /* ---------- Section rhythm ---------- */
 section{position:relative}
+section[id]{scroll-margin-top:64px}
 .sec{padding:clamp(80px,12vw,160px) 0}
 .sec__head{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:24px 40px;margin-bottom:clamp(36px,5vw,64px)}
 .sec__head .h2{margin-top:16px}
@@ -185,7 +191,7 @@ section{position:relative}
 .tabs-scroll::-webkit-scrollbar{display:none}
 .tabs{position:relative;display:inline-flex;padding:6px;border-radius:999px;background:rgba(11,9,8,.07)}
 .tabs__list{display:flex;gap:2px}
-.tabs__list button{height:48px;padding:0 22px;border-radius:999px;font-weight:800;font-size:15px;white-space:nowrap;color:rgba(11,9,8,.62);transition:transform 160ms var(--ease-out)}
+.tabs__list button{height:48px;padding:0 22px;border-radius:999px;font-weight:800;font-size:15px;white-space:nowrap;color:rgba(11,9,8,.72);transition:transform 160ms var(--ease-out)}
 .tabs__list button:active{transform:scale(.97)}
 /* Duplicate list styled "active", clipped to the active tab → perfect color transition */
 .tabs__list--active{position:absolute;inset:6px;pointer-events:none;clip-path:inset(0 100% 0 0 round 999px);transition:clip-path 320ms var(--ease-out)}
@@ -592,7 +598,7 @@ let current = null, swapT;
 
 function clipTo(k, instant) {
   const b = tabs.querySelector(`[data-k="${k}"]`);
-  const L = b.offsetLeft, R = tabs.offsetWidth - (L + b.offsetWidth);
+  const L = b.offsetLeft - tabs.offsetLeft, R = tabs.offsetWidth - (L + b.offsetWidth);
   if (instant) { tabsA.style.transition = "none"; requestAnimationFrame(() => tabsA.style.transition = ""); }
   tabsA.style.clipPath = `inset(0 ${R}px 0 ${L}px round 999px)`;
 }
@@ -675,11 +681,29 @@ addEventListener("scroll", () => {
 }, {passive: true});
 
 /* ===== Scroll reveals (once) ===== */
+// .rv observed directly. .reveal-img is fully clipped (zero visible area → IO never fires and
+// lazy images never load), so we observe its parent and reveal only after the photo decodes.
+const revealImg = el => {
+  const img = el.querySelector("img");
+  img.loading = "eager";
+  const go = () => requestAnimationFrame(() => el.classList.add("in"));
+  img.decode ? img.decode().then(go, go) : go();
+};
 const io = new IntersectionObserver(es => es.forEach(e => {
-  if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); }
-}), {rootMargin: "0px 0px -80px 0px", threshold: 0.08});
-const observe = () => document.querySelectorAll(".rv:not(.in), .reveal-img:not(.in)").forEach(el => io.observe(el));
-observe();
+  if (!e.isIntersecting) return;
+  const t = e.target;
+  t.classList.add("in");
+  (t._reveal || []).forEach(revealImg);
+  io.unobserve(t);
+}), {rootMargin: "0px 0px -80px 0px", threshold: 0.05});
+document.querySelectorAll(".reveal-img").forEach(el => { const p = el.parentElement; (p._reveal = p._reveal || []).push(el); });
+document.querySelectorAll(".rv").forEach(el => io.observe(el));
+document.querySelectorAll(".reveal-img").forEach(el => { if (!el.parentElement.classList.contains("rv")) io.observe(el.parentElement); });
+// Prefetch the photos just before they're needed (lazy loading can't see clipped images)
+const pre = new IntersectionObserver(es => es.forEach(e => {
+  if (e.isIntersecting) { (e.target._reveal || []).forEach(el => el.querySelector("img").loading = "eager"); pre.unobserve(e.target); }
+}), {rootMargin: "800px 0px"});
+document.querySelectorAll(".reveal-img").forEach(el => pre.observe(el.parentElement));
 </script>
 </body>
 </html>
